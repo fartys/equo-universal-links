@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unirse a Equo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        .button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+        }
+        .fallback {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">E</div>
+        <h1>¡Únete a Equo!</h1>
+        <p>Estás a punto de unirte a un grupo de gastos compartidos. Si tienes la app instalada, se abrirá automáticamente.</p>
+        
+        <a href="#" id="openApp" class="button">Abrir en Equo</a>
+        
+        <div class="fallback">
+            <p>Si la app no se abre automáticamente, asegúrate de tener Equo instalada.</p>
+        </div>
+    </div>
+
+    <script>
+        // Obtener parámetros de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const groupId = urlParams.get('groupId');
+        
+        if (code && groupId) {
+            // Intentar abrir la app
+            const appUrl = `equo://join?code=${code}&groupId=${groupId}`;
+            const fallbackUrl = `https://apps.apple.com/app/equo/id123456789`; // Cambiar por el ID real de la app
+            
+            // Intentar abrir la app
+            window.location.href = appUrl;
+            
+            // Fallback después de un tiempo
+            setTimeout(() => {
+                // Si no se abrió la app, mostrar mensaje
+                document.getElementById('openApp').textContent = 'Descargar Equo';
+                document.getElementById('openApp').href = fallbackUrl;
+            }, 2000);
+        } else {
+            document.querySelector('h1').textContent = 'Enlace inválido';
+            document.querySelector('p').textContent = 'Este enlace no contiene la información necesaria para unirse al grupo.';
+            document.getElementById('openApp').style.display = 'none';
+        }
+    </script>
+</body>
+</html> 
